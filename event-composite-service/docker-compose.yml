@@ -1,0 +1,30 @@
+version: '2'
+services:
+  mongo:
+    image: mongo
+  event-service:
+    build: ../event-service
+    command: java -jar /app/event-service-latest.jar --spring.data.mongodb.host="mongo" --server.port=80
+    ports:
+      - "8081:80"
+    depends_on:
+      - mongo
+  review-service:
+    build: ../review-service
+    command: java -jar /app/review-service-latest.jar --server.port=80
+    ports:
+      - "8082:80"
+  recommendation-service:
+    build: ../recommendation-service
+    command: java -jar /app/recommendation-service-latest.jar --server.port=80
+    ports:
+      - "8083:80"
+  event-composite-service:
+    build: .
+    command: java -jar /app/service-latest.jar
+    ports:
+      - "8080:8080"
+    links:
+      - event-service
+      - review-service
+      - recommendation-service

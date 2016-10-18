@@ -1,0 +1,53 @@
+{
+  "provider" : {
+    "name" : "RecommendationService"
+  },
+  "consumer" : {
+    "name" : "EventCompositeService"
+  },
+  "interactions" : [ {
+    "providerState" : "recommendations for event are available",
+    "description" : "request event recommendations",
+    "request" : {
+      "method" : "GET",
+      "path" : "/recommendations",
+      "query" : "eventId=57c811115d6fe2b86380d549"
+    },
+    "response" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : "application/hal+json;charset=UTF-8"
+      },
+      "body" : {
+        "_links" : {
+          "self" : {
+            "href" : "http://localhost:8080/recommendations?eventId=57c811115d6fe2b86380d549"
+          }
+        },
+        "_embedded" : {
+          "recommendations" : [ {
+            "eventId" : "57c811115d6fe2b86380d549",
+            "recommendationId" : "1",
+            "content" : "content 1"
+          }, {
+            "eventId" : "57c811115d6fe2b86380d549",
+            "recommendationId" : "2",
+            "content" : "content 2"
+          }, {
+            "eventId" : "57c811115d6fe2b86380d549",
+            "recommendationId" : "3",
+            "content" : "content 3"
+          } ]
+        }
+      }
+    }
+  } ],
+  "metadata" : {
+    "pact-specification" : {
+      "version" : "2.0.0"
+    },
+    "pact-jvm" : {
+      "version" : "3.0.2"
+    }
+  }
+}

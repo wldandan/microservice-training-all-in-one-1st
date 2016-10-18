@@ -1,0 +1,17 @@
+---
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8011/eureka/
+server:
+  port: ${PORT:${SERVER_PORT:9030}}   # Select any available port if neither port nor server port are specified.
+
+---
+spring:
+  profiles: docker
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8011/eureka/
+server:
+  port: 9030
