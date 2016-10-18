@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: file://${user.home}/Work/training/microservice-online-training/training/training-code/centralized-config/config-repo
+server:
+  port: 8021
+
+---
+spring:
+  profiles: docker
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/microservice-in-action/config-repo
+  rabbitmq:
+    host: rabbitmq
+server:
+  port: 8021
