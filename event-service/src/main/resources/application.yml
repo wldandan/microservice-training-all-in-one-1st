@@ -1,0 +1,29 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+server:
+  port: 8080
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8011/eureka/
+---
+spring:
+  profiles: docker
+  data:
+    mongodb:
+      host: mongo
+server:
+  port: 9000
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registryFetchIntervalSeconds: 5
+    instanceInfoReplicationIntervalSeconds: 5
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://eureka-server:8011/eureka/
