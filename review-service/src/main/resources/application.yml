@@ -1,0 +1,24 @@
+---
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8011/eureka/
+server:
+  port: ${PORT:${SERVER_PORT:9010}}   # Select any available port if neither port nor server port are specified.
+
+---
+spring:
+  profiles: docker
+
+server:
+  port:9010
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registryFetchIntervalSeconds: 5
+    instanceInfoReplicationIntervalSeconds: 5
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://eureka-server:8011/eureka/
