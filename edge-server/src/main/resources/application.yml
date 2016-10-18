@@ -1,0 +1,59 @@
+server:
+  port: 8765
+zuul:
+  ignoredServices: "*"
+  prefix: /api
+  routes:
+    review-service:
+      path: /review-service/**
+      serviceId: REVIEW
+      #http://localhost:8765/api/review-service/reviews?eventId=1
+    review-by-url:
+      path: /reviews-url/**
+      url: http://localhost:8085/
+      #http://192.168.10.143:8765/api/reviews-url/reviews?eventId=1
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8011/eureka/
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+---
+spring:
+  profiles: standalone
+zuul:
+  ignoredServices: "*"
+  prefix: /api
+  routes:
+    event: /events
+    review: /reviews
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8011/eureka/
+---
+spring:
+  profiles: docker
+zuul:
+  ignoredServices: "*"
+  prefix: /api
+  routes:
+    event: /events/**
+    event-composite: /event-composite/**
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8011/eureka/
