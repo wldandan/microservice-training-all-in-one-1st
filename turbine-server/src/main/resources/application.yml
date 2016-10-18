@@ -1,0 +1,25 @@
+---
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8011/eureka/
+server:
+  port: 8030
+  
+info:
+  component: Turbine
+
+turbine:
+  clusterNameExpression: new String("default")
+  appConfig: event-composite
+
+---
+spring:
+  profiles: docker
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8011/eureka/
+server:
+  port: 8030
