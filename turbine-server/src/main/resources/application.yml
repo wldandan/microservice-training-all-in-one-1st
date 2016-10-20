@@ -1,8 +1,8 @@
----
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8011/eureka/
+
 server:
   port: 8030
   
@@ -17,9 +17,10 @@ turbine:
 spring:
   profiles: docker
 
+server:
+  port: 8030
+
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka-server:8011/eureka/
-server:
-  port: 8030
+      defaultZone: http://eureka-server:8010/eureka/

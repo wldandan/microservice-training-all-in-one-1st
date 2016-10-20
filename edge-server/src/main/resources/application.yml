@@ -17,7 +17,7 @@ eureka:
     preferIpAddress: true
   client:
     serviceUrl:
-      defaultZone: http://localhost:8011/eureka/
+      defaultZone: http://localhost:8010/eureka/
 hystrix:
   command:
     default:
@@ -43,19 +43,22 @@ eureka:
     serviceUrl:
       defaultZone: http://eureka-server:8011/eureka/
 ---
-server:
-  port: 8040
 spring:
   profiles: docker
+
+server:
+  port: 8040
+
 zuul:
   ignoredServices: "*"
   prefix: /api
   routes:
     event: /events/**
     event-composite: /event-composite/**
+    
 eureka:
   instance:
     preferIpAddress: true
   client:
     serviceUrl:
-      defaultZone: http://eureka-server:8011/eureka/
+      defaultZone: http://eureka-server:8010/eureka/

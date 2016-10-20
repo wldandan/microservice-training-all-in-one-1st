@@ -9,15 +9,17 @@ eureka:
     preferIpAddress: true
   client:
     serviceUrl:
-      defaultZone: http://localhost:8011/eureka/
+      defaultZone: http://localhost:8010/eureka/
 ---
 spring:
   profiles: docker
   data:
     mongodb:
       host: mongo
+
 server:
   port: 9000
+  
 eureka:
   instance:
     preferIpAddress: true
@@ -26,4 +28,4 @@ eureka:
     instanceInfoReplicationIntervalSeconds: 5
     initialInstanceInfoReplicationIntervalSeconds: 5
     serviceUrl:
-      defaultZone: http://eureka-server:8011/eureka/
+      defaultZone: http://eureka-server:8010/eureka/

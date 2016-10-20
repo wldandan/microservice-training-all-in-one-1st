@@ -40,7 +40,6 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://eureka-tertiary:8012/eureka/,http://eureka-primary:8010/eureka/
-
 ---
 spring:
   application:
@@ -56,3 +55,10 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://eureka-primary:8010/eureka/,http://eureka-secondary:8011/eureka/
+
+---
+spring:
+  profiles: docker
+
+eureka:
+  Environment: Production

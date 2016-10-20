@@ -11,23 +11,15 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8010:8010"
-  edge-server:
-    build: edge-server
+  config-server:
+    build: config-server
     restart: always
-    command: bash -c "wait-for-it -t 0 eureka-server:8011 && java -jar /app/edge-server-latest.jar"
     environment:
       SPRING_PROFILES_ACTIVE: docker
     ports:
-      - "8040:8040"      
-  # config-server:
-  #   build: config-server
-  #   restart: always
-  #   environment:
-  #     SPRING_PROFILES_ACTIVE: docker
-  #   ports:
-  #     - "8020:8020"
-  #   depends_on:
-  #     - rabbitmq
+      - "8020:8020"
+     # depends_on:
+     #   - rabbitmq
   turbine-server:
     build: turbine-server
     restart: always
@@ -35,10 +27,18 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8030:8030"
+  edge-server:
+    build: edge-server
+    restart: always
+    command: bash -c "wait-for-it -t 0 eureka-server:8010 && java -jar /app/edge-server-latest.jar"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8040:8040"      
   event-service:
     build: event-service
     restart: always
-    command: bash -c "wait-for-it -t 0 eureka-server:8011 && java -jar /app/event-service-latest.jar"
+    command: bash -c "wait-for-it -t 0 eureka-server:8010 && java -jar /app/event-service-latest.jar"
     environment:
       SPRING_PROFILES_ACTIVE: docker
     ports:
@@ -50,7 +50,7 @@ services:
   review-service:
     build: review-service
     restart: always
-    command: bash -c "wait-for-it -t 0 eureka-server:8011 && java -jar /app/review-service-latest.jar"
+    command: bash -c "wait-for-it -t 0 eureka-server:8010 && java -jar /app/review-service-latest.jar"
     environment:
       SPRING_PROFILES_ACTIVE: docker
     ports:
@@ -60,7 +60,7 @@ services:
   # recommendation-service:
   #   build: recommendation-service
   #   restart: always
-  #   command: bash -c "wait-for-it eureka-server:8011 && java -jar /app/recommendation-service-latest.jar"
+  #   command: bash -c "wait-for-it eureka-server:8010 && java -jar /app/recommendation-service-latest.jar"
   #   environment:
   #     SPRING_PROFILES_ACTIVE: docker
   #   ports:
@@ -72,7 +72,7 @@ services:
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: docker
-    command: bash -c "wait-for-it -t 0 eureka-server:8011 && java -jar /app/event-composite-service-latest.jar"
+    command: bash -c "wait-for-it -t 0 eureka-server:8010 && java -jar /app/event-composite-service-latest.jar"
     ports:
       - "9030:9030"
     depends_on:

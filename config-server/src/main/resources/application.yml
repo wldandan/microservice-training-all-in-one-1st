@@ -17,5 +17,6 @@ spring:
           uri: https://github.com/microservice-in-action/config-repo
   rabbitmq:
     host: rabbitmq
+
 server:
   port: 8020
