@@ -11,13 +11,21 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8011:8011"
+  edge-server:
+    build: edge-server
+    restart: always
+    command: bash -c "wait-for-it -t 0 eureka-server:8011 && java -jar /app/edge-server-latest.jar"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8040:8040"      
   # config-server:
   #   build: config-server
   #   restart: always
   #   environment:
   #     SPRING_PROFILES_ACTIVE: docker
   #   ports:
-  #     - "8021:8021"
+  #     - "8020:8020"
   #   depends_on:
   #     - rabbitmq
   turbine-server:

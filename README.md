@@ -1,66 +1,79 @@
-## Docker环境
+## 基本介绍
 
-### 启动应用
-```
-docker-compose up --build
-```
+该部分内容包括了课程中提到的报名系统相关的服务以及相关的支撑组件
 
-### 访问应用
+#### 由业务拆分的服务
 
-* 访问Eureka Server(查看注册的服务和支撑组件)
-http://localhost:8011
+* Event Service
+* Review Service
+* Recommendation Service
+* Event Composite Service
 
-* 访问配置中心(查看Event serviece在profile是'docker'场景下的配置信息。注意在docker profile下，使用的是github的config-repo，所以确保网络畅通)
-htp://localhost:8012/event/docker 
+#### 相关支撑组件
+* Eureka Server
+* Config Server
+* Turbine Server
+* Edge Server
 
-* 访问Event Service(访问EventService首页，HAL-browser显示EventService提供的接口)
-http://localhost:9000/events
+## 如何使用
 
-* 加载测试数据，刷新上一步的访问
-db-seed/seed.sh
-http://localhost:9000/events
-http://localhost:9000/events/57c811115d6fe2b86380d538
 
-* 访问Event-composite(查看event-composite返回的结果)
-http://localhost:9030/events/57c811115d6fe2b86380d538
+### 1.Docker环境下
 
-* 访问Turbine Server
-http://localhost:8030/hystrix
-输入'http://localhost:8030/turbine.stream?cluster=default'
-使用siege，启动请求测试，查看Hystrix的断路器变化
-```siege http://localhost:9030/events/57c811115d6fe2b86380d538```
+1.启动应用
 
-## 非Docker环境
+```docker-compose up --build```
 
-### 启动应用
+2.加载测试数据
 
-* 启动MongoDB
-* 启动Eureka Server
-* 启动多个Service(EventService,ReviewService,RecommendationService,CompositeService)
-* 启动Turbine Server
+```db-seed/seed.sh```
 
-### 访问应用
+3.访问应用
 
-* 访问Eureka Server(查看注册的服务和支撑组件)
-http://localhost:8011
+| 组件或者服务    | 端口号         | 访问地址| 描述信息| 
+|:------------- |:------------|:-------|:-------|
+|注册中心 Eureka Server|8011|http://localhost:8011|查看注册的服务和支撑组件|
+|配置中心 Spring Cloud Config Server|8012|htp://localhost:8012/event/docker|访问profile=docker场景下的EventService配置信息。注意在该场景下，使用的是github的config-repo，请确保网络畅通|
+|Event Service|9000|http://localhost:9000/events|使用浏览器访问EventService首页以及使用Curl访问EventService首页|
+|Review Service|9010|http://localhost:9010/reviews|使用浏览器访问ReviewService首页以及使用Curl访问ReviewService首页|
+|Recommendation Service|9020|http://localhost:9020/recommendation|使用浏览器访问RecommendationService首页以及使用Curl访问RecommendationService|
+|Event Composite Service|9030|http://localhost:9030/events/57c811115d6fe2b86380d538|查看Event聚合后的明细|
+|断路器管理中心 Turbine Server|8011|http://localhost:8030/hystrix|```输入http://localhost:8030/turbine.stream?cluster=default```;使用siege模拟请求测试，查看Hystrix Dashboard的变化,命令如下所示```siege http://localhost:9030/events/57c811115d6fe2b86380d538```|
+|API Gateway Edge Server|8040|http://localhost:8040/api/events/events或者http://localhost:8040/api/events/events/57c811115d6fe2b86380d538|访问Edge Server, http://localhost:8040/api/event-composite/events/57c811115d6fe2b86380d538
 
-* 访问配置中心(使用的是本地配置文件存储配置项)
-htp://localhost:8012/event/docker 
+---
 
-* 访问Event Service(访问EventService首页，HAL-browser显示EventService提供的接口)
-http://localhost:9000/events
+### 2.非Docker环境
 
-* 加载测试数据，并刷新上一步的访问页面
+###1.安装并启动依赖
+
+* JVM
+* MongoDB
+* RabbitMQ
+
+###2.启动应用
+
+在不同组件或者服务内执行
+```Java -jar build/libs/xxxxx.jar```或者```./gradlew bootRun```
+
+###3.加载测试数据
+
 ```mongoimport --db test --collection event --type json --file events-with-id.json```
 
-http://localhost:9000/events
-http://localhost:9000/events/57c811115d6fe2b86380d538
 
-* 访问Event-composite(查看event-composite返回的结果)
-http://localhost:9030/events/57c811115d6fe2b86380d538
+###4.访问应用
 
-* 访问Turbine Server
-http://localhost:8030/hystrix
-输入'http://localhost:8030/turbine.stream?cluster=default'
-使用siege，启动请求测试，查看Hystrix的断路器变化
-```siege http://localhost:9030/events/57c811115d6fe2b86380d538```
+
+3.访问应用
+
+| 组件或者服务    | 端口号         | 访问地址| 描述信息| 
+|:------------- |:------------|:-------|:-------|
+|注册中心 Eureka Server|8011|http://localhost:8011|查看注册的服务和支撑组件|
+|配置中心 Spring Cloud Config Server|8012|htp://localhost:8012/event/docker|访问profile=docker场景下的EventService配置信息。注意在该场景下，使用的是github的config-repo，请确保网络畅通|
+|Event Service|9000|http://localhost:9000/events|使用浏览器访问EventService首页以及使用Curl访问EventService首页|
+|Review Service|9010|http://localhost:9010/reviews|使用浏览器访问ReviewService首页以及使用Curl访问ReviewService首页|
+|Recommendation Service|9020|http://localhost:9020/recommendation|使用浏览器访问RecommendationService首页以及使用Curl访问RecommendationService|
+|Event Composite Service|9030|http://localhost:9030/events/57c811115d6fe2b86380d538|查看Event聚合后的明细|
+|断路器管理中心 Turbine Server|8011|http://localhost:8030/hystrix|```输入http://localhost:8030/turbine.stream?cluster=default```;使用siege模拟请求测试，查看Hystrix Dashboard的变化,命令如下所示```siege http://localhost:9030/events/57c811115d6fe2b86380d538```|
+|API Gateway Edge Server|8040|http://localhost:8040/api/events/events或者http://localhost:8040/api/events/events/57c811115d6fe2b86380d538|访问Edge Server, http://localhost:8040/api/event-composite/events/57c811115d6fe2b86380d538
+

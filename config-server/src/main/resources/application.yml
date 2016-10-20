@@ -5,7 +5,7 @@ spring:
         git:
           uri: file://${user.home}/Work/training/microservice-online-training/training/training-code/centralized-config/config-repo
 server:
-  port: 8021
+  port: 8020
 
 ---
 spring:
@@ -18,4 +18,4 @@ spring:
   rabbitmq:
     host: rabbitmq
 server:
-  port: 8021
+  port: 8020

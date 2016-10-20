@@ -1,5 +1,5 @@
 server:
-  port: 8765
+  port: 8040
 zuul:
   ignoredServices: "*"
   prefix: /api
@@ -7,11 +7,11 @@ zuul:
     review-service:
       path: /review-service/**
       serviceId: REVIEW
-      #http://localhost:8765/api/review-service/reviews?eventId=1
+      #http://localhost:8040/api/review-service/reviews?eventId=1
     review-by-url:
       path: /reviews-url/**
       url: http://localhost:8085/
-      #http://192.168.10.143:8765/api/reviews-url/reviews?eventId=1
+      #http://192.168.10.143:8040/api/reviews-url/reviews?eventId=1
 eureka:
   instance:
     preferIpAddress: true
@@ -43,6 +43,8 @@ eureka:
     serviceUrl:
       defaultZone: http://eureka-server:8011/eureka/
 ---
+server:
+  port: 8040
 spring:
   profiles: docker
 zuul:
