@@ -10,7 +10,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
     ports:
-      - "8011:8011"
+      - "8010:8010"
   edge-server:
     build: edge-server
     restart: always
