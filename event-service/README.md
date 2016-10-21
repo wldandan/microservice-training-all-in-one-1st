@@ -1,42 +1,55 @@
-##Run the applicaiton locally
+## 本地环境运行
 
-* Install MongoDB
+* 安装MongoDB
 
 ```
 brew install mongodb
 ```
 
 
-* Start MongoDB
+* 启动MongoDB
 
 ```
 mongod --config /usr/local/etc/mongod.conf
+```
+
+* 导入测试数据
+```
 mongoimport --db test --collection event --type json --file db-seed/events-with-id.json
 ```
 
-* Start application
+* 启动应用
 
 ```
 ./gradlew bootRun
 ```
 
-##Run the applicaiton in docker
+## Docker环境中运行
+
+* 生成Jar包
+
+```./gradlew clean build```
+
+* 使用Docker-compose运行
 
 ```
-./gradlew clean build
 ./docker-compose up --build
+```
+
+* 导入测试数据
+```
 ./db-seed/seed.sh
 ```
 
-## Manage event
+## 其他
  
-### Create one event
+### 创建一条Event活动
 
 ```
 START_AT=$(date +"%Y-%m-%d") && END_AT=$(date +"%Y-%m-%d") && curl -H "Content-type: application/json" -d "{\"name\": \"测试活动\", \"numberLimit\": 20, \"mainPhoto\": \"http://localhost/image/main_photo.png\", \"introduction\": \"活动介绍\", \"startAt\": \"$START_AT\", \"endAt\": \"$END_AT\"}" http://localhost:8080/events
 ```
 
-### Update one event
+### 更新一条Event活动
 
 ```
 START_AT=$(date +"%Y-%m-%d") && END_AT=$(date +"%Y-%m-%d") && curl -H "Content-type: application/json" -d "{\"name\": \"测试活动-updated\", \"numberLimit\": 20, \"mainPhoto\": \"http://localhost/image/main_photo.png\", \"introduction\": \"活动介绍\", \"startAt\": \"$START_AT\", \"endAt\": \"$END_AT\"}" http://localhost:8080/events/{id}
