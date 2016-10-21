@@ -11,13 +11,13 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8010:8010"
-  config-server:
-    build: config-server
-    restart: always
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-    ports:
-      - "8020:8020"
+  # config-server:
+  #   build: config-server
+  #   restart: always
+  #   environment:
+  #     SPRING_PROFILES_ACTIVE: docker
+  #   ports:
+  #     - "8020:8020"
      # depends_on:
      #   - rabbitmq
   turbine-server:

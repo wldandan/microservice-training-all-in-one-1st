@@ -61,4 +61,4 @@ spring:
   profiles: docker
 
 eureka:
-  Environment: Production
+  environment: production
