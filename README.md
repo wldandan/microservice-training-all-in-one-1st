@@ -24,18 +24,16 @@
 
 ```docker-compose up --build```
 
-##### b). 加载测试数据
+##### b).加载测试数据
 
 ```db-seed/seed.sh```
 
 #####c).访问应用
 
-
-| 组件或者服务    | 端口号         | 访问地址| 描述信息| 
-|-------------|------------|-------|-------|
-|注册中心 Eureka Server|8010|http://localhost:8010|查看注册的服务和支撑组件|
-|配置中心 Spring Cloud Config Server|8020|http://localhost:8020/event/docker|访问profile=docker场景下的EventService配置信息。注意在该场景下，使用的是github的config-repo，请确保网络畅通|
-
+First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column
 ---
 
 ### 2.非Docker环境
